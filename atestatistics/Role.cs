@@ -20,7 +20,7 @@ namespace atestatistics
 
         public string ToString()
         {
-            return BelongTo + "," + RoleName + "," + RoleType + "," + RoleLevel + "," + TimesLeft + "\n";
+            return BelongTo + "," + RoleName + "," + RoleType + "," + RoleLevel + "," + TimesLeft;
         }
         
         public void init()

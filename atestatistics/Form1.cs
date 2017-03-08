@@ -25,8 +25,9 @@ namespace atestatistics
             roles = new List<Role>();
             InitializeComponent();
 
+            DataTable.MouseDoubleClick += DataTable_DoubleClick;
             GridView view = (GridView)DataTable.Views[0];
-            view.DoubleClick += DataTable_DoubleClick;
+            
             view.RowCellStyle += view_RowCellStyle;
             view.OptionsCustomization.AllowQuickHideColumns = false;
             
@@ -100,7 +101,7 @@ namespace atestatistics
             StreamWriter sw = new StreamWriter(File.OpenWrite(DataFile));
             foreach (Role r in roles)
             {
-                sw.Write(r.ToString());
+                sw.WriteLine(r.ToString());
             }
             sw.Flush();
             sw.Close();
@@ -117,11 +118,36 @@ namespace atestatistics
             WriteToFile();
         }
 
-        private void DataTable_DoubleClick(object sender, EventArgs e)
+        private void DataTable_DoubleClick(object sender, MouseEventArgs e)
         {
-            GridView view = (GridView)sender;
+            GridView view = (GridView)DataTable.Views[0];
+            
             Point pt = view.GridControl.PointToClient(Control.MousePosition);
-            DoRowDoubleClick(view, pt);
+            if(e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                DoRowDoubleClick(view, pt);
+            }
+            else if(e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                DoRowRightClick(view, pt);
+            }
+        }
+
+        private void DoRowRightClick(GridView view, Point pt)
+        {
+            GridHitInfo info = view.CalcHitInfo(pt);
+            if (info.InRow || info.InRowCell)
+            {
+                if (roles[info.RowHandle].TimesLeft < 3)
+                {
+                    roles[info.RowHandle].TimesLeft++;
+                    Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("这个咸鱼角色已经剩余3次了");
+                }
+            }
         }
 
         private void DoRowDoubleClick(GridView view, Point pt)

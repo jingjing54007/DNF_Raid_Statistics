@@ -148,9 +148,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 506);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(235, 15);
+            this.label2.Size = new System.Drawing.Size(391, 15);
             this.label2.TabIndex = 6;
-            this.label2.Text = "双击对应的行使某角色的剩余次数减少一次";
+            this.label2.Text = "双击左键使某角色的剩余次数减少一次，双击右键增加一次（防止误点）";
             // 
             // label3
             // 
